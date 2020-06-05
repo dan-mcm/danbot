@@ -1,0 +1,29 @@
+{
+  "name": "danbot",
+  "version": "1.0.0",
+  "description": "a basic discord bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dan-mcm/danbot.git"
+  },
+  "author": "Daniel McMahon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dan-mcm/danbot/issues"
+  },
+  "homepage": "https://github.com/dan-mcm/danbot#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
+    "giphy-js-sdk-core": "^1.0.6",
+    "giphy-random": "^2.0.8",
+    "opusscript": "0.0.7",
+    "ytdl-core": "^3.1.1"
+  }
+}

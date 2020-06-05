@@ -1,0 +1,4 @@
+.env
+config.json
+ffmpeg.exe
+node_modules
