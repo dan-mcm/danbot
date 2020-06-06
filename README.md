@@ -28,17 +28,22 @@ Bootstrapped from
 ---
 
 # Local Setup
-## Discord Config
+## Environmental Variables
 
-A config.json file needs to be included to pull your Discord Application Credentials.  
-Check out the handy [discordpy docs](https://discordpy.readthedocs.io/en/latest/discord.html) on how to set up your own Bot application.
+The following is a list of environmental variables that need to be defined.
+A .env config file can be added to run the project locally.
 
 ```
-{
-    "prefix": "!",
-    "token": "YOUR_TOKEN"
-}
+BOT_PREFIX: "!",
+BOT_TOKEN: "YOUR_TOKEN"
+GIPHY_API_KEY="your-api-key"
+WELCOME_CHANNEL="channel-you-want-to-welcome-new-users-to"
 ```
+
+* For prefix & token vars - check out the handy [discordpy docs](https://discordpy.readthedocs.io/en/latest/discord.html) on how to set up your own Bot application.
+* For GIPHY_API_KEY you need to register with GIPHY to obtain an API key.  
+* For WELCOME_CHANNEL you need to specify a custom within your discord server to use for new user addition welcome.
+
 
 ## Audio Dependencies
 
@@ -49,13 +54,4 @@ Without it you are likely to encounter the following Error when running any of t
 
 ```
 Error: FFmpeg/avconv not found!
-```
-
-## GIPHY dependencies
-
-You need to register with GIPHY to obtain an API key.  
-This key should be added to a .env file in the root of the project
-
-```
-GIPHY_API_KEY="your-api-key"
 ```
