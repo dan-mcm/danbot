@@ -2,23 +2,25 @@ const { getUserFromMention } = require('../util/getUser')
 
 module.exports = {
 	name: 'ban',
-	description: 'Ban a user e.g. !ban @user',
+	description: 'Ban a user e.g. !ban @user reason',
 	execute(message, client) {
 		const split = message.content.split(/ +/);
 		const args = split.slice(1);
+		const member = message.mentions.members.first();
 
-		const member = getUserFromMention(args[0], client);
+		let reason = args.slice(1).join(' ');
+		if(!reason) reason = "No reason provided";
 
 		if (!member) {
 			return message.reply('You need to mention the member you want to ban');
 		}
 
-		if (!message.member.hasPermission("MANAGE\_MEMBERS")) {
+		if (!member.bannable){
 			return message.reply('I can\'t ban this user.');
 		}
 
-		return message.guild.members.ban(member)
-			.then(() => message.reply(`${member.username} was banned.`))
-			.catch(error => message.reply('Sorry, an error occured.'));
+		return member.ban()
+		.then(() => message.reply(`${member.user.tag} has been banned by ${message.author.tag} reason: ${reason}`))
+		.catch(error => message.reply(`Sorry I couldn't ban because of: ${error}`));
 	},
 };
