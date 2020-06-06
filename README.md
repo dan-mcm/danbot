@@ -11,6 +11,7 @@ Bootstrapped from
 
 | Command     | Description     |
 | :------------- | :------------- |
+| !8ball | Ask the 8ball your question e.g. !8ball will tomorrow be sunny? |
 | !ban | Ban a player |
 | !commands | List all available commands |
 | !gif | Shows a random gif from giphy (general audience rated) |
