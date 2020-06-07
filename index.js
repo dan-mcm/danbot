@@ -45,7 +45,7 @@ client.on("ready", () => {
 
 // twitch polling for live channels
 client.on("ready", () => {
-  const pollingCurrentlyLive = require('./twitch')
+  const pollingCurrentlyLive = require('./twitch').pollingCurrentlyLive
   setInterval(() => pollingCurrentlyLive(client), process.env.TWITCH_POLLING_FREQUENCY)
 })
 

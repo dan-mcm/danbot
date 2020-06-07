@@ -2,3 +2,4 @@
 config.json
 ffmpeg.exe
 node_modules
+coverage

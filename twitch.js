@@ -1,11 +1,9 @@
-// at the top of your file
 const Discord = require('discord.js');
-
 const axios = require('axios')
 
 // get Twitch Bearer token
-function getTwitchBearerToken() {
-  return axios.post("https://id.twitch.tv/oauth2/token", null, {
+async function getTwitchBearerToken() {
+  const response = await axios.post("https://id.twitch.tv/oauth2/token", null, {
         params: {
             client_id: process.env.TWITCH_CLIENT_ID,
             client_secret: process.env.TWITCH_CLIENT_SECRET,
@@ -13,12 +11,11 @@ function getTwitchBearerToken() {
           }
         }
       )
-      .then(data => data.data.access_token)
-      .catch(err => console.log(`Error fetching token: ${err}`))
+  return response // .data.access_token
 }
 
 // calling Twitch api checking what streamers are active based on env variable list of whitelisted users
-function checkWhitelistedChannels(token,client){
+async function checkWhitelistedChannels(token,client){
   const headers = {
     Authorization: `Bearer ${token}`,
     'client-id': process.env.TWITCH_CLIENT_ID
@@ -31,10 +28,12 @@ function checkWhitelistedChannels(token,client){
      user_login: process.env.TWITCH_CHANNELS.split(',')
   };
 
-  return axios.get('https://api.twitch.tv/helix/streams', {
+  const response = await axios.get('https://api.twitch.tv/helix/streams', {
     headers,
     params
   })
+
+  return response
 }
 
 function checkingNowLive(data,client){
@@ -66,7 +65,7 @@ function sendingChannelUpdates(data, client){
             // hacky way to limit our posting to streams that only started within the last x minutes (based on polling frequency)
             let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60e3
             if(minutesAgoStarted < (process.env.TWITCH_POLLING_FREQUENCY/60000)){
-              return channel.send(formatLiveCardEmbed(streamer, game_name))
+              return channel.send(formatLiveCardEmbed(streamer, game_name, ''))
           }
         }
       ).catch(
@@ -78,7 +77,13 @@ function sendingChannelUpdates(data, client){
   // return channel.send(`Somebody went live! ${JSON.stringify(data)}`);
 }
 
-function formatLiveCardEmbed(streamer, game_name){
+function formatLiveCardEmbed(streamer, game_name, time){
+  // for testing purposes need to be able to pass a hardcoded time value
+  if(time.length == 0){
+    time = new Date()
+  }
+
+  console.log(`THUMBNAILURL ${streamer.thumbnail_url}`)
   return new Discord.MessageEmbed()
     .setColor('#6441a5')
     .setTitle(`🔴 **${streamer.user_name}** is Now Live!`)
@@ -94,43 +99,60 @@ function formatLiveCardEmbed(streamer, game_name){
       { name: 'Time Started', value: streamer.started_at, inline: true }
     )
     .setImage(streamer.thumbnail_url.replace("{width}", "700").replace("{height}", "400"))
-    .setTimestamp()
+    .setTimestamp(time)
 }
 
 function gameIDConversion(id){
   return getTwitchBearerToken()
+  .then(bearerData =>
+    {
+      return bearerData.data.access_token
+    }
+  )
   .then(token =>
     getGameName(id,token)
+  )
+  .then(gamedata =>
+    gamedata.data.data[0].name
   )
   .catch(error =>
     console.log(error)
   )
 }
 
-function getGameName(id, token){
+async function getGameName(id, token){
   const headers = {
     Authorization: `Bearer ${token}`,
     'client-id': process.env.TWITCH_CLIENT_ID
   };
   const params = { id };
-  return axios.get('https://api.twitch.tv/helix/games', {
+
+  const response = await axios.get(
+    'https://api.twitch.tv/helix/games',
+    {
     headers,
     params
-  })
-  .then(gamedata =>
-    gamedata.data.data[0].name
+    }
   )
-  .catch(err =>
-    console.log(err)
-  )
+  return response
 }
 
 function pollingCurrentlyLive(client){
   console.log('Polling Twitch - Currently Live...')
   return getTwitchBearerToken()
-    .then(token => checkWhitelistedChannels(token, client))
-    .then(channels => checkingNowLive(channels.data, client))
-    .catch(err => console.log(err))
+  .then(bearerData => bearerData.data.access_token)
+  .then(token => checkWhitelistedChannels(token, client))
+  .then(channels => checkingNowLive(channels.data, client))
+  .catch(err => console.log(err))
 }
 
-module.exports = pollingCurrentlyLive
+module.exports = {
+  pollingCurrentlyLive,
+  getGameName,
+  gameIDConversion,
+  formatLiveCardEmbed,
+  sendingChannelUpdates,
+  checkingNowLive,
+  checkWhitelistedChannels,
+  getTwitchBearerToken
+}
