@@ -31,6 +31,14 @@ A special mention to the discordjs community accessible for answering queries ov
 
 ---
 
+# Additional Functions
+
+## Twitch Integration
+
+The bot can provide going live messages for whitelisted users based on the following env Variables
+* `NOWLIVE_ANNOUNCEMENTS_ID` controls the channel where live twitch channels are now active - see [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get the channel id
+* `TWITCH_CHANNELS` controls which twitch channels are monitored for live status. This is a defined as a comma delimited string
+
 # Local Setup
 
 ## Install & Run
