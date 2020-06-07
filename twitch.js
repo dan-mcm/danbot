@@ -35,12 +35,6 @@ function checkWhitelistedChannels(token,client){
     headers,
     params
   })
-  .then(data =>
-    checkingNowLive(data.data,client)
-  )
-  .catch(err =>
-    console.log(err)
-  )
 }
 
 function checkingNowLive(data,client){
@@ -66,17 +60,25 @@ function sendingChannelUpdates(data, client){
   return data.map(
     streamer =>
     {
-      // hacky way to limit our posting to streams that only started within the last x minutes (based on polling frequency)
-      let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60e3
-      if(minutesAgoStarted < (process.env.TWITCH_POLLING_FREQUENCY/60000)){
-        return channel.send(formatLiveCardEmbed(streamer))
-      }
+      gameIDConversion(streamer.game_id)
+        .then(
+          game_name => {
+            // hacky way to limit our posting to streams that only started within the last x minutes (based on polling frequency)
+            let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60e3
+            if(minutesAgoStarted < (process.env.TWITCH_POLLING_FREQUENCY/60000)){
+              return channel.send(formatLiveCardEmbed(streamer, game_name))
+          }
+        }
+      ).catch(
+        err =>
+        console.log(err)
+      )
     }
   )
   // return channel.send(`Somebody went live! ${JSON.stringify(data)}`);
 }
 
-function formatLiveCardEmbed(streamer){
+function formatLiveCardEmbed(streamer, game_name){
   return new Discord.MessageEmbed()
     .setColor('#6441a5')
     .setTitle(`🔴 **${streamer.user_name}** is Now Live!`)
@@ -86,7 +88,7 @@ function formatLiveCardEmbed(streamer){
     .setThumbnail(streamer.thumbnail_url)
     .addFields(
       // need to hit giantbomb api to translate game_id to a name
-      { name: 'Currently Playing', value: streamer.game_id, inline: true },
+      { name: 'Currently Playing', value: game_name, inline: true },
       { name: 'Viewers', value: streamer.viewer_count, inline: true },
       // could add custom parsing to make better human readble
       { name: 'Time Started', value: streamer.started_at, inline: true }
@@ -95,14 +97,39 @@ function formatLiveCardEmbed(streamer){
     .setTimestamp()
 }
 
-function pollingCurrentlyLive(client){
+function gameIDConversion(id){
   return getTwitchBearerToken()
-    .then(token =>
-      checkWhitelistedChannels(token,client)
-    )
-    .catch(err =>
+  .then(token =>
+    getGameName(id,token)
+  )
+  .catch(error =>
+    console.log(error)
+  )
+}
+
+function getGameName(id, token){
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'client-id': process.env.TWITCH_CLIENT_ID
+  };
+  const params = { id };
+  return axios.get('https://api.twitch.tv/helix/games', {
+    headers,
+    params
+  })
+  .then(gamedata =>
+    gamedata.data.data[0].name
+  )
+  .catch(err =>
     console.log(err)
   )
+}
+
+function pollingCurrentlyLive(client){
+  return getTwitchBearerToken()
+    .then(token => checkWhitelistedChannels(token, client))
+    .then(channels => checkingNowLive(channels.data, client))
+    .catch(err => console.log(err))
 }
 
 module.exports = pollingCurrentlyLive

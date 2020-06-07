@@ -71,7 +71,6 @@ WELCOME_CHANNEL=welcome
 * For WELCOME_CHANNEL you need to specify a custom within your discord server to use for new user addition welcome.
 * For TWITCH_CLIENT variables check the [Twitch API docs](https://dev.twitch.tv/docs/authentication).
 
-
 ## Audio Dependencies
 
 You need ffmpeg installed on your device to successfully have the bot join and translate youtube to audio files.  
