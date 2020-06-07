@@ -151,7 +151,6 @@ client.on("message", async message => {
 client.login(process.env.BOT_TOKEN);
 
 // adding this to appease the port binding heroku gods
-
 var express = require('express')
 var app = express()
 

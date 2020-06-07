@@ -126,6 +126,7 @@ function getGameName(id, token){
 }
 
 function pollingCurrentlyLive(client){
+  console.log('Polling Twitch - Currently Live...')
   return getTwitchBearerToken()
     .then(token => checkWhitelistedChannels(token, client))
     .then(channels => checkingNowLive(channels.data, client))
