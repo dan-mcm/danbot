@@ -10,40 +10,58 @@ Bootstrapped from
 A special mention to the discordjs community accessible for answering queries over on [Discord](https://discord.gg/bRCvFy9).
 
 ---
-# Commands
+# Commands & Additional Features
+
+## Helpful Commands
 
 | Command     | Description     |
 | :------------- | :------------- |
-| !8ball | Ask the 8ball your question e.g. !8ball will tomorrow be sunny? |
-| !ban | Ban a player |
 | !commands | List all available commands |
-| !gif | Shows a random gif from giphy (general audience rated) |
-| !help | Basic info on using the bot       |
-| !kick | Kick a user |
+| !help | Basic info on using the bot     
 | !ping | Get latency information |
-| !purge | Delete the last messages in all chats |
+| !purge | Delete the bots last message(s) from all chats |
+
+## User Control
+
+| Command     | Description     |
+| :------------- | :------------- |
+| !ban | Ban a player |
+| !kick | Kick a user |
 | !userinfo | Get information about a user |
+
+## Playback Control
+
+| Command     | Description     |
+| :------------- | :------------- |
 | !nowplaying | Get the song that is playing |
 | !play | Play a song in your active audio channel |
 | !queue | Shows the current song queue |
 | !skip | Skip a song |
 | !stop | Stop all songs in the queue |
 
+## Fun Commands
+
+| Command     | Description     |
+| :------------- | :------------- |
+| !8ball | Ask the 8ball your question e.g. !8ball will tomorrow be sunny? |
+| !gif | Shows a random gif from giphy (general audience rated) |
+
 ---
+# Twitch Integration
 
-# Additional Functions
-
-## Twitch Integration
-
+## 🔴 Now Live
 The bot can provide going live messages for whitelisted users based on the following env Variables
-* `NOWLIVE_ANNOUNCEMENTS_ID` controls the channel where live twitch channels are now active - see [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get the channel id
+* `NOWLIVE_ANNOUNCEMENTS_ID` controls the channel where live twitch channels are now active
 * `TWITCH_CHANNELS` controls which twitch channels are monitored for live status. This is a defined as a comma delimited string
 
+Note: the bot is currently configured to poll Twitch API on a 60second interval (defined by the `TWITCH_POLLING_FREQUENCY` environmental variable so there may be a delay between the time a user goes live and a message is shown. If interested a potential alternative to this implementation is using [Twitchs pub/sub system](https://dev.twitch.tv/docs/pubsub).
+
+--- 
 # Local Setup
 
 ## Install & Run
 
-Using yarn, should also run fine on npm
+Using yarn during development, should also run fine on npm
 
 ```
 yarn install
@@ -75,10 +93,17 @@ NOWLIVE_ANNOUNCEMENTS_ID=channel-id
 WELCOME_CHANNEL=welcome
 ```
 
-* For prefix & token vars - check out the handy [discordpy docs](https://discordpy.readthedocs.io/en/latest/discord.html) on how to set up your own Bot application.
-* For GIPHY_API_KEY you need to register with GIPHY to obtain an API key.  
-* For WELCOME_CHANNEL you need to specify a custom within your discord server to use for new user addition welcome.
-* For TWITCH_CLIENT variables check the [Twitch API docs](https://dev.twitch.tv/docs/authentication).
+### Discord Bot Variables
+
+For Discord Bot settings (`BOT_PREFIX`, `BOT_TOKEN`) - check out the handy [discordpy docs](https://discordpy.readthedocs.io/en/latest/discord.html) on how to set up your own Bot application.
+
+* For `WELCOME_CHANNEL` you need to specify a channel name within your discord server to use for new user addition welcome.
+* For `NOWLIVE_ANNOUNCEMENTS_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific channels channel-id
+
+### Getting API Keys
+
+* For `GIPHY_API_KEY` you need to [register with GIPHY](https://developers.giphy.com/) to obtain an API key.  
+* For `TWITCH_CLIENT_ID/SECRET` variables check the [Twitch API docs](https://dev.twitch.tv/docs/authentication)
 
 ## Audio Dependencies
 
