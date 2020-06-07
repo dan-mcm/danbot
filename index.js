@@ -7,7 +7,8 @@ const Canvas = require('canvas');
 const result = require('dotenv').config()
 
 if (result.error) {
-  throw result.error
+  console.log("No .env file found, using global environmental variables intead")
+  // throw result.error
 }
 
 // extension of the discord client with the queue system for music purposes
