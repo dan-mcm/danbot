@@ -56,7 +56,7 @@ The bot can provide going live messages for whitelisted users based on the follo
 
 Note: the bot is currently configured to poll Twitch API on a 60second interval (defined by the `TWITCH_POLLING_FREQUENCY` environmental variable so there may be a delay between the time a user goes live and a message is shown. If interested a potential alternative to this implementation is using [Twitchs pub/sub system](https://dev.twitch.tv/docs/pubsub).
 
---- 
+---
 # Local Setup
 
 ## Install & Run
@@ -115,3 +115,24 @@ Without it you are likely to encounter the following Error when running any of t
 ```
 Error: FFmpeg/avconv not found!
 ```
+
+# Production Deployment
+
+The Bot is currently configured for deployment on Heroku (as an initial free hosting solution).
+There is a nice [medium article](https://medium.com/@mason.spr/hosting-a-discord-js-bot-for-free-using-heroku-564c3da2d23f) on how to deploy your own.
+
+As we are using a .env file to generate global environmental variables, we need to be sure to copy and
+paste these values into the applications 'Config Vars' on the Heroku dashboard.
+
+In order to workaround the audio dependencies issues I am trailing the use of .buildpacks to use https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
+
+Currently the repo is configured to redeploy the app with any pushes made to the master branch.
+In order to review production logs you need to [download & install the heroku cli tooling](https://devcenter.heroku.com/articles/heroku-cli#download-and-install).
+
+```
+heroku login
+heroku logs -a danbot2020 -t
+```
+
+The current bot url is currently accessible at `https://danbot2020.herokuapp.com/` with a `/health` endpoint that returns a 200 OK response.
+Note that you need to add your hosting URL as a valid OAuth Redirect URL entry on your registered Twitch application.
