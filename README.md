@@ -124,7 +124,7 @@ There is a nice [medium article](https://medium.com/@mason.spr/hosting-a-discord
 As we are using a .env file to generate global environmental variables, we need to be sure to copy and
 paste these values into the applications 'Config Vars' on the Heroku dashboard.
 
-In order to workaround the audio dependencies issues I am trailing the use of .buildpacks to use https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
+In order to workaround the audio dependencies issues I am trailing the use of .buildpacks to use https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git. Note the ordering of buildpacks is important on your Heroku dashboard, the ffmpeg should be ran first, followed by the nodejs buildpack.
 
 Currently the repo is configured to redeploy the app with any pushes made to the master branch.
 In order to review production logs you need to [download & install the heroku cli tooling](https://devcenter.heroku.com/articles/heroku-cli#download-and-install).
