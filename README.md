@@ -32,6 +32,16 @@ A special mention to the discordjs community accessible for answering queries ov
 ---
 
 # Local Setup
+
+## Install & Run
+
+Using yarn, should also run fine on npm
+
+```
+yarn install
+yarn start
+```
+
 ## Environmental Variables
 
 The following is a list of environmental variables that need to be defined.

@@ -42,6 +42,12 @@ client.on("ready", () => {
   client.user.setActivity(`Serving ${Object.keys(client.guilds).length} servers`);
 });
 
+// twitch polling for live channels
+client.on("ready", () => {
+  const pollingCurrentlyLive = require('./twitch')
+  setInterval(() => pollingCurrentlyLive(client), process.env.TWITCH_POLLING_FREQUENCY)
+})
+
 // client.on("guildCreate", guild => {
 //   // This event triggers when the bot joins a guild.
 //   console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
@@ -142,7 +148,3 @@ client.on("message", async message => {
 });
 
 client.login(process.env.BOT_TOKEN);
-
-// twitch polling for live channels
-const pollingCurrentlyLive = require('./twitch')
-setInterval(pollingCurrentlyLive, process.env.TWITCH_POLLING_FREQUENCY)
