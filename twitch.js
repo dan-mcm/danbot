@@ -83,7 +83,6 @@ function formatLiveCardEmbed(streamer, game_name, time){
     time = new Date()
   }
 
-  console.log(`THUMBNAILURL ${streamer.thumbnail_url}`)
   return new Discord.MessageEmbed()
     .setColor('#6441a5')
     .setTitle(`🔴 **${streamer.user_name}** is Now Live!`)
