@@ -142,3 +142,7 @@ client.on("message", async message => {
 });
 
 client.login(process.env.BOT_TOKEN);
+
+// twitch polling for live channels
+const pollingCurrentlyLive = require('./twitch')
+setInterval(pollingCurrentlyLive, process.env.TWITCH_POLLING_FREQUENCY)
