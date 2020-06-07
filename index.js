@@ -149,3 +149,18 @@ client.on("message", async message => {
 });
 
 client.login(process.env.BOT_TOKEN);
+
+// adding this to appease the port binding heroku gods
+
+var express = require('express')
+var app = express()
+
+// health check endpoint
+app.get('/health', function (req, res) {
+  res.sendStatus(200)
+})
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
+});
