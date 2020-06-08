@@ -86,7 +86,7 @@ client.on("guildMemberAdd", async member => {
 	const canvas = Canvas.createCanvas(700, 250);
 	const ctx = canvas.getContext('2d');
 
-	const background = await Canvas.loadImage('./images/wallpaper.png');
+	const background = await Canvas.loadImage('./images/wallpaper2.jpg');
 	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
 	ctx.strokeStyle = '#74037b';
@@ -94,12 +94,12 @@ client.on("guildMemberAdd", async member => {
 
 	// Slightly smaller text placed above the member's display name
 	ctx.font = '28px sans-serif';
-	ctx.fillStyle = '#ffffff';
+	ctx.fillStyle = '#5E1224';
 	ctx.fillText('Welcome to the server,', canvas.width / 2.5, canvas.height / 3.5);
 
 	// Add an exclamation point here and below
 	ctx.font = applyText(canvas, `${member.displayName}!`);
-	ctx.fillStyle = '#ffffff';
+	ctx.fillStyle = '#000000';
 	ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
 
 	ctx.beginPath();
