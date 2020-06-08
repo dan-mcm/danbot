@@ -41,10 +41,9 @@ function checkingNowLive(data,client){
   if(data.length==0){
     return null
   } else {
-    // filtering to just keep the values we want
     let filteredStreamerInfo = data.data.map(
-      ({user_name, title, started_at, viewer_count, thumbnail_url, game_id}) =>
-      ({user_name, title, started_at, viewer_count, thumbnail_url, game_id})
+      ({user_name, title, started_at, viewer_count, thumbnail_url, game_id, user_id}) =>
+      ({user_name, title, started_at, viewer_count, thumbnail_url, game_id, user_id})
     )
     return sendingChannelUpdates(filteredStreamerInfo,client)
   }
@@ -60,14 +59,26 @@ function sendingChannelUpdates(data, client){
   return data.map(
     streamer =>
     {
-      gameIDConversion(streamer.game_id)
-        .then(
-          game_name => {
-            // hacky way to limit our posting to streams that only started within the last x minutes (based on polling frequency)
-            let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60e3
-            // using 2 minutes as our hardcoded threshold
-            if(minutesAgoStarted < 2){
-              return channel.send(formatLiveCardEmbed(streamer, game_name))
+      // note for later -> abstract token call outside this promise then pass into the two functions, prevent duplicating calls
+      Promise.all(
+        [
+          gameIDConversion(streamer.game_id),
+          streamersProfilePicConversion(streamer.user_id)
+        ]
+      ).then(
+        res =>
+        {
+          // some custom logic in case the profilepics arent found, can be better error handled
+          // similar logic shoudl be in place for gameIDConversion for safety
+          let avatarImage = ""
+          if (res[1].data.length > 0){
+             avatarImage = res[1].data[0].profile_image_url
+           }
+          // hacky way to limit our posting to streams that only started within the last x minutes (based on polling frequency)
+          let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60e3
+          // using 2 minutes as our hardcoded threshold
+          if(minutesAgoStarted < 2){
+            return channel.send(formatLiveCardEmbed(streamer, res[0], avatarImage))
           }
         }
       ).catch(
@@ -79,14 +90,14 @@ function sendingChannelUpdates(data, client){
   // return channel.send(`Somebody went live! ${JSON.stringify(data)}`);
 }
 
-function formatLiveCardEmbed(streamer, game_name){
+function formatLiveCardEmbed(streamer, game_name, streamer_avatar){
   return new Discord.MessageEmbed()
     .setColor('#6441a5')
     .setTitle(`🔴 **${streamer.user_name}** is Now Live!`)
     .setURL(`https://www.twitch.com/${streamer.user_name}`)
     // .setAuthor('Some name', 'https://i.imgur.com/wSTFkRM.png', 'https://discord.js.org')
     .setDescription(streamer.title)
-    .setThumbnail(streamer.thumbnail_url)
+    .setThumbnail(streamer_avatar)
     .addFields(
       // need to hit giantbomb api to translate game_id to a name
       { name: 'Currently Playing', value: game_name, inline: true },
@@ -120,6 +131,36 @@ function getGameName(id, token){
   })
   .then(gamedata =>
     gamedata.data.data[0].name
+  )
+  .catch(err =>
+    console.log(err)
+  )
+}
+
+function streamersProfilePicConversion(user_id){
+  return getTwitchBearerToken()
+  .then(token =>
+    getStreamersProfilePic(user_id,token)
+  )
+  .catch(error =>
+    console.log(error)
+  )
+}
+ function getStreamersProfilePic(user_id, token){
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'client-id': process.env.TWITCH_CLIENT_ID
+  };
+  const params = { id: user_id };
+  return axios.get(
+    `https://api.twitch.tv/helix/users`,
+    {
+      headers,
+      params
+    }
+  ).then(streamerData =>
+    // appears temperatmental - keep getting data[] results...
+    streamerData.data
   )
   .catch(err =>
     console.log(err)
