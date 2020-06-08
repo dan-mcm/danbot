@@ -65,7 +65,8 @@ function sendingChannelUpdates(data, client){
           game_name => {
             // hacky way to limit our posting to streams that only started within the last x minutes (based on polling frequency)
             let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60e3
-            if(minutesAgoStarted < (process.env.TWITCH_POLLING_FREQUENCY/60000)){
+            // using 2 minutes as our hardcoded threshold
+            if(minutesAgoStarted < 2){
               return channel.send(formatLiveCardEmbed(streamer, game_name))
           }
         }
