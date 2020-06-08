@@ -1,5 +1,7 @@
 # DanBot
 
+<a href="https://discord.gg/bRCvFy9"><img src="https://discordapp.com/api/guilds/719386778468876378/embed.png" alt="Discord server" /></a>
+
 A Basic Discord Bot written in JS.
 
 Bootstrapped from
