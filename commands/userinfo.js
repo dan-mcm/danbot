@@ -2,7 +2,7 @@ const { getUserFromMention } = require('../util/getUser')
 
 module.exports = {
 	name: 'userinfo',
-	description: 'Get information about a user e.g. !userinfo @Danku',
+	description: `Get information about a user e.g. ${process.env.BOT_PREFIX}userinfo @Danku`,
 	execute(message, client) {
 		const split = message.content.split(/ +/);
 		const args = split.slice(1);

@@ -2,7 +2,7 @@ const { getUserFromMention } = require('../util/getUser')
 
 module.exports = {
 	name: 'ban',
-	description: 'Ban a user e.g. !ban @user reason',
+	description: `Ban a user e.g. ${process.env.BOT_PREFIX}ban @user reason`,
 	execute(message, client) {
 		const split = message.content.split(/ +/);
 		const args = split.slice(1);

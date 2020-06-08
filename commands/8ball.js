@@ -2,7 +2,7 @@ const fs = require('fs')
 
 module.exports = {
 	name: '8ball',
-	description: 'Ask the 8ball your question e.g. !8ball will tomorrow be sunny?',
+	description: `Ask the 8ball your question e.g. ${process.env.BOT_PREFIX}8ball will tomorrow be sunny?`,
 	execute(message) {
     let options = [
       "It is certain.",
