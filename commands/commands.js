@@ -9,7 +9,7 @@ module.exports = {
 
 		for (const file of commandFiles) {
 			const command = require(`./${file}`);
-			str += `"!${command.name}" ${command.description} \n`;
+			str += `"${process.env.BOT_PREFIX}${command.name}" ${command.description} \n`;
 		}
     str += '```'
 		message.channel.send(str);
