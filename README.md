@@ -49,7 +49,7 @@ The bot is accessible in the `Danbot Staging` discord channel accessible [here](
 | :------------- | :------------- |
 | !8ball | Ask the 8ball your question e.g. !8ball will tomorrow be sunny? |
 | !gif | Shows a random gif from giphy (general audience rated) |
-
+| !cat | Return a random cat image |
 ---
 # Twitch Integration
 
@@ -82,6 +82,9 @@ A .env config file can be added to run the project locally.
 BOT_PREFIX=your-prefix-char
 BOT_TOKEN=your-discord-bot-token
 
+# The Cat API Key
+CAT_API_KEY=your-catapi-key
+
 # Giphy Keys
 GIPHY_API_KEY=your-giphy-api-key
 
@@ -106,8 +109,9 @@ For Discord Bot settings (`BOT_PREFIX`, `BOT_TOKEN`) - check out the handy [disc
 
 ### Getting API Keys
 
+* For `CAT_API_KEY` you need to [register with TheCatAPI](https://thecatapi.com/) to obtain an API key.
 * For `GIPHY_API_KEY` you need to [register with GIPHY](https://developers.giphy.com/) to obtain an API key.  
-* For `TWITCH_CLIENT_ID/SECRET` variables check the [Twitch API docs](https://dev.twitch.tv/docs/authentication)
+* For `TWITCH_CLIENT_ID/SECRET` variables check the [Twitch API docs](https://dev.twitch.tv/docs/authentication).
 
 ## Audio Dependencies
 
