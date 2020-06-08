@@ -19,7 +19,7 @@ module.exports = {
       return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
 
 		return member.kick()
-			.then(() => message.reply(`${member.user.tag} has been kicked by ${message.author.tag} reason: ${reason}`))
+			.then(() => message.reply(`you have kicked: ${member.user} \n\`\`\`reason: ${reason}\`\`\``))
 			.catch(error => message.reply(`Sorry I couldn't kick because of: ${error}`));
 	},
 };

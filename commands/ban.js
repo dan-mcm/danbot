@@ -20,7 +20,7 @@ module.exports = {
 		}
 
 		return member.ban()
-		.then(() => message.reply(`${member.user.tag} has been banned by ${message.author.tag} reason: ${reason}`))
+		.then(() => message.reply(`you have banned ${member.user} \n\`\`\`reason: ${reason}\`\`\``))
 		.catch(error => message.reply(`Sorry I couldn't ban because of: ${error}`));
 	},
 };
