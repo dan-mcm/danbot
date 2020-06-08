@@ -9,6 +9,8 @@ Bootstrapped from
 
 A special mention to the discordjs community accessible for answering queries over on [Discord](https://discord.gg/bRCvFy9).
 
+The bot is accessible in the `Danbot Staging` discord channel accessible [here](https://discord.gg/xp7NbBT).
+
 ---
 # Commands & Additional Features
 
