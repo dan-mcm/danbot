@@ -101,9 +101,7 @@ function formatLiveCardEmbed(streamer, game_name, streamer_avatar){
     .addFields(
       // need to hit giantbomb api to translate game_id to a name
       { name: 'Currently Playing', value: game_name, inline: true },
-      { name: 'Viewers', value: streamer.viewer_count, inline: true },
-      // could add custom parsing to make better human readble
-      { name: 'Time Started', value: streamer.started_at, inline: true }
+      { name: 'Viewers', value: streamer.viewer_count, inline: true }
     )
     .setImage(streamer.thumbnail_url.replace("{width}", "700").replace("{height}", "400"))
     .setTimestamp()
