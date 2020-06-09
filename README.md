@@ -144,3 +144,12 @@ heroku logs -a danbot2020 -t
 
 The current bot url is currently accessible at `https://danbot2020.herokuapp.com/` with a `/health` endpoint that returns a 200 OK response.
 Note that you need to add your hosting URL as a valid OAuth Redirect URL entry on your registered Twitch application.
+
+Want to temporarily turn off/on the bot?
+
+```
+# scale down
+heroku ps:scale web=0 -a danbot2020
+# scale up
+heroku ps:scale web=1 -a danbot2020
+```
