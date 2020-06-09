@@ -78,7 +78,7 @@ function sendingChannelUpdates(data, client){
           let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60e3
           // using 2 minutes as our hardcoded threshold
           if(minutesAgoStarted < 2){
-            return channel.send('@everyone' + `, **${streamer.user_name}** is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
+            return channel.send('@everyone' + `, **${streamer.user_name}** - https://www.twitch.com/${streamer.user_name} - is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
           }
         }
       ).catch(
