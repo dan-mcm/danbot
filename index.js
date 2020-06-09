@@ -93,7 +93,7 @@ client.on("guildMemberAdd", async member => {
 	ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
 	// Slightly smaller text placed above the member's display name
-	ctx.font = '28px sans-serif';
+	ctx.font = '24px sans-serif';
 	ctx.fillStyle = '#000000';
 	ctx.fillText('Welcome to the server,', canvas.width / 1.8, canvas.height / 3.6);
 
