@@ -2,7 +2,7 @@ const ytdl = require("ytdl-core");
 
 module.exports = {
   name: "play",
-  description: "Play a song in your active audio channel",
+  description: `Play a song (youtube link) in your active audio channel e.g. ${process.env.BOT_PREFIX}play https://www.youtube.com/watch?v=dQw4w9WgXcQ`,
   async execute(message) {
     try {
       const args = message.content.split(" ");
