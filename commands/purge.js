@@ -10,6 +10,8 @@ module.exports = {
 			return message.reply('Please provide the number of messages to delete. (max 100)')
 		}
 
+		if (!message.member.hasPermission("KICK_MEMBERS"))
+			return message.reply("you do not have priviledges to purge channels.")
 
 		if (!deleteCount || deleteCount < 2 || deleteCount > 100)
 			return message.reply('Please provide a number between 2 and 100 for the number of messages to delete');
