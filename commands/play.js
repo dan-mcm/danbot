@@ -14,6 +14,10 @@ module.exports = {
         return message.channel.send(
           "You need to be in a voice channel to play music!"
         );
+
+      if((message.member.voice.channel).toString() !== `<#${process.env.PLAYLIST_VOICE_CHANNEL_ID}>`)
+        return message.channel.send("Please use the dedicated music listening audio channel.")
+
       const permissions = voiceChannel.permissionsFor(message.client.user);
       if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
         return message.channel.send(

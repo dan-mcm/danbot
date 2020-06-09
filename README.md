@@ -98,6 +98,7 @@ TWITCH_POLLING_FREQUENCY="60000"
 NOWLIVE_ANNOUNCEMENTS=now-live
 NOWLIVE_ANNOUNCEMENTS_ID=channel-id
 WELCOME_CHANNEL=welcome
+PLAYLIST_VOICE_CHANNEL_ID=channel-id
 ```
 
 ### Discord Bot Variables
@@ -106,6 +107,7 @@ For Discord Bot settings (`BOT_PREFIX`, `BOT_TOKEN`) - check out the handy [disc
 
 * For `WELCOME_CHANNEL` you need to specify a channel name within your discord server to use for new user addition welcome.
 * For `NOWLIVE_ANNOUNCEMENTS_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific channels channel-id
+* For `PLAYLIST_VOICE_CHANNEL_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific voice channels channel-id
 
 ### Getting API Keys
 
