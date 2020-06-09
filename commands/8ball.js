@@ -28,7 +28,7 @@ module.exports = {
     ]
     let choice = Math.floor(Math.random() * options.length)
 		return message.reply(
-      `the 8ball has spoken:\n\`\`\`json\n\"${options[choice]}\"\`\`\``,
+      `the 8ball has spoken:\n\`\`\`json\n\"${options[choice]}\"\`\`\``
     )
 	},
 };

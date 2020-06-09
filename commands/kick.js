@@ -15,7 +15,10 @@ module.exports = {
 			return message.reply('You need to mention the member you want to kick');
 		}
 
-    if(!member.kickable)
+		if (!message.member.hasPermission("KICK_MEMBERS"))
+			return message.reply("you do not have permission to kick members.")
+
+		if(!member.kickable)
       return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
 
 		return member.kick()

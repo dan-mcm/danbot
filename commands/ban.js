@@ -15,8 +15,11 @@ module.exports = {
 			return message.reply('You need to mention the member you want to ban');
 		}
 
+		if (!message.member.hasPermission("BAN_MEMBERS"))
+			return message.reply("you do not have permission to ban members.")
+
 		if (!member.bannable){
-			return message.reply('I can\'t ban this user.');
+			return message.reply('I cannot ban this user! Do they have a higher role? Do I have ban permissions?');
 		}
 
 		return member.ban()
