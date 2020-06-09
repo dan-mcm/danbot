@@ -40,7 +40,7 @@ client.once('disconnect', () => {
 // This event will run if the bot starts, and logs in, successfully.
 client.on("ready", () => {
   console.log(`Bot has started, with ${Object.keys(client.users).length} users, in ${Object.keys(client.channels).length} channels of ${Object.keys(client.guilds).length} guilds.`);
-  client.user.setActivity(`Serving ${Object.keys(client.guilds).length} servers`);
+  // client.user.setActivity(`Serving ${Object.keys(client.guilds).length} servers`);
 });
 
 // twitch polling for live channels
