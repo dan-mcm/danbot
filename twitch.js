@@ -53,7 +53,9 @@ function sendingChannelUpdates(data, client){
 
   // hack with hardcoded channel id - need an automated way to get it...
   const channel = client.channels.cache.get(process.env.NOWLIVE_ANNOUNCEMENTS_ID);
+
   if (!channel) return;
+
   // Twitch uses rfc3339 time formatting so getting the current timestamp in that format
   let currentDateTime = (new Date()).toISOString()
   return data.map(
@@ -76,6 +78,9 @@ function sendingChannelUpdates(data, client){
            }
           // hacky way to limit our posting to streams that only started within the last x minutes (based on polling frequency)
           let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60e3
+
+          console.log(`[DEBUG] ${streamer.user_name} started ${minutesAgoStarted} minutes ago`)
+
           // using 2 minutes as our hardcoded threshold
           if(minutesAgoStarted < 2){
             return channel.send('@everyone' + `, **${streamer.user_name}** - https://www.twitch.com/${streamer.user_name} - is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
