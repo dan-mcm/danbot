@@ -81,6 +81,7 @@ A .env config file can be added to run the project locally.
 # Discord Bot settings
 BOT_PREFIX=your-prefix-char
 BOT_TOKEN=your-discord-bot-token
+EMBED_COLORS=hex-color-for-cards
 
 # The Cat API Key
 CAT_API_KEY=your-catapi-key
@@ -103,7 +104,8 @@ PLAYLIST_VOICE_CHANNEL_ID=channel-id
 
 ### Discord Bot Variables
 
-For Discord Bot settings (`BOT_PREFIX`, `BOT_TOKEN`) - check out the handy [discordpy docs](https://discordpy.readthedocs.io/en/latest/discord.html) on how to set up your own Bot application.
+For Discord Bot settings (`BOT_PREFIX`, `BOT_TOKEN`) - check out the handy [discordpy docs](https://discordpy.readthedocs.io/en/latest/discord.html) on how to set up your own Bot application.  
+The `EMBED_COLORS` variable is a HEX color used for determining the color of message embeds (cards) sent by the Bot.
 
 * For `WELCOME_CHANNEL` you need to specify a channel name within your discord server to use for new user addition welcome.
 * For `NOWLIVE_ANNOUNCEMENTS_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific channels channel-id
