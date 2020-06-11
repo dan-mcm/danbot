@@ -83,7 +83,7 @@ function sendingChannelUpdates(data, client){
           console.log(`[DEBUG] ${streamer.user_name} started ${minutesAgoStarted} minutes ago \n[started @ ${streamer.started_at}] \n[currenttime @ ${currentDateTime}]`)
 
           // using 2 minutes as our hardcoded threshold
-          if(minutesAgoStarted < 2){
+          if(minutesAgoStarted < 3){
             return channel.send('@everyone' + `, **${streamer.user_name}** - https://www.twitch.com/${streamer.user_name} - is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
           }
         }
