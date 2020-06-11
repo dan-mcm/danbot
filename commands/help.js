@@ -10,6 +10,7 @@ module.exports = {
 		.setColor(process.env.EMBED_COLORS)
 		.setTitle('Help')
 		.setDescription(`Looking to figure out how to best use me? You can see a full list of my active commands with the \`${process.env.BOT_PREFIX}commands\` option.` )
+		.setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Help-browser.svg/768px-Help-browser.svg.png')
 		.addFields(
 			{ name: 'Bug Reporting', value: 'Found a bug or issue with the bot? Please submit a bug report here: https://github.com/dan-mcm/danbot/issues/new/choose' },
 			{ name: 'Feature Request', value: 'Have an idea or new feature suggestion for the bot? Please submit a feature request here: https://github.com/dan-mcm/danbot/issues/new/choose' },

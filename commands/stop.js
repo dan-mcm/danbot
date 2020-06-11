@@ -5,6 +5,7 @@ module.exports = {
 		const serverQueue = message.client.queue.get(message.guild.id);
 		if (!message.member.voice.channel) return message.channel.send('You have to be in a voice channel to stop the music!');
 		serverQueue.songs = [];
+		message.channel.send(`Stopping.`)
 		serverQueue.connection.dispatcher.end();
 	},
 };

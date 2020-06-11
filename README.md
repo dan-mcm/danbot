@@ -32,13 +32,14 @@ The bot is accessible in the `Danbot Staging` discord channel accessible [here](
 | !ban | Ban a player |
 | !kick | Kick a user |
 | !userinfo | Get information about a user |
+| !whitelist | Get the users currently whitelisted for shouting out when going live on Twitch. |
 
 ## Playback Control
 
 | Command     | Description     |
 | :------------- | :------------- |
 | !nowplaying | Get the song that is playing |
-| !play | Play a song in your active audio channel |
+| !play | Play a song in your active audio channel e.g. -play some song OR -play youtube-url |
 | !queue | Shows the current song queue |
 | !skip | Skip a song |
 | !stop | Stop all songs in the queue |
@@ -50,6 +51,8 @@ The bot is accessible in the `Danbot Staging` discord channel accessible [here](
 | !8ball | Ask the 8ball your question e.g. !8ball will tomorrow be sunny? |
 | !gif | Shows a random gif from giphy (general audience rated) |
 | !cat | Return a random cat image |
+| !fortune | Open a fortune cookie |
+
 ---
 # Twitch Integration
 
@@ -95,10 +98,14 @@ TWITCH_CLIENT_SECRET=your-twitch-client-secret
 TWITCH_CHANNELS=comma-deliminated-list-of-channels-to-track-going-live
 TWITCH_POLLING_FREQUENCY="60000"
 
+# YouTube Config
+YOUTUBE_API_KEY=youtube-api-key
+
 # Channels
 NOWLIVE_ANNOUNCEMENTS=now-live
 NOWLIVE_ANNOUNCEMENTS_ID=channel-id
 WELCOME_CHANNEL=welcome
+PLAYLIST_CHANNEL=channel-id
 PLAYLIST_VOICE_CHANNEL_ID=channel-id
 ```
 
@@ -109,13 +116,14 @@ The `EMBED_COLORS` variable is a HEX color used for determining the color of mes
 
 * For `WELCOME_CHANNEL` you need to specify a channel name within your discord server to use for new user addition welcome.
 * For `NOWLIVE_ANNOUNCEMENTS_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific channels channel-id
-* For `PLAYLIST_VOICE_CHANNEL_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific voice channels channel-id
+* For `PLAYLIST_CHANNEL` and `PLAYLIST_VOICE_CHANNEL_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific voice channels channel-id
 
 ### Getting API Keys
 
 * For `CAT_API_KEY` you need to [register with TheCatAPI](https://thecatapi.com/) to obtain an API key.
 * For `GIPHY_API_KEY` you need to [register with GIPHY](https://developers.giphy.com/) to obtain an API key.  
 * For `TWITCH_CLIENT_ID/SECRET` variables check the [Twitch API docs](https://dev.twitch.tv/docs/authentication).
+* For `YOUTUBE_API_KEY` you need to [register with Google](https://developers.google.com/youtube/v3/getting-started) to obtain an API key.
 
 ## Audio Dependencies
 
