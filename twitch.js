@@ -56,8 +56,6 @@ function sendingChannelUpdates(data, client){
 
   if (!channel) return;
 
-  // Twitch uses rfc3339 time formatting so getting the current timestamp in that format
-  let currentDateTime = (new Date()).toISOString()
   return data.map(
     streamer =>
     {
@@ -70,6 +68,9 @@ function sendingChannelUpdates(data, client){
       ).then(
         res =>
         {
+          // Twitch uses rfc3339 time formatting so getting the current timestamp in that format
+          let currentDateTime = (new Date()).toISOString()
+
           // some custom logic in case the profilepics arent found, can be better error handled
           // similar logic shoudl be in place for gameIDConversion for safety
           let avatarImage = ""
@@ -77,9 +78,9 @@ function sendingChannelUpdates(data, client){
              avatarImage = res[1].data[0].profile_image_url
            }
           // hacky way to limit our posting to streams that only started within the last x minutes (based on polling frequency)
-          let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60e3
+          let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60000
 
-          console.log(`[DEBUG] ${streamer.user_name} started ${minutesAgoStarted} minutes ago`)
+          console.log(`[DEBUG] ${streamer.user_name} started ${minutesAgoStarted} minutes ago \n[started @ ${streamer.started_at}] \n[currenttime @ ${currentDateTime}]`)
 
           // using 2 minutes as our hardcoded threshold
           if(minutesAgoStarted < 2){
