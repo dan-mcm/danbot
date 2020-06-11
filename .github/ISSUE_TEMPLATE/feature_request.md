@@ -1,6 +1,6 @@
 ---
-name: Feature request
-about: Suggest an idea for this DanBot
+name: Feature Request
+about: Suggest a new feature request for DanBot
 title: "[Feature Request] Feature Title Here"
 labels: enhancement
 assignees: dan-mcm

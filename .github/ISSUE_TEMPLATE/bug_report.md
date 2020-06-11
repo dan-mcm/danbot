@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: Bug Report
 about: Create a report to help improve DanBot
 title: "[Bug] Problem Title"
 labels: bug
