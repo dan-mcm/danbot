@@ -1,48 +1,54 @@
 const fs = require('fs')
+const Discord = require("discord.js");
 
 module.exports = {
 	name: 'commands',
 	description: 'List all available commands',
 	execute(message) {
-		let output = "**The following commands are available** \n\n";
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-		console.log(`COMMANDFILES ${commandFiles}`)
 
 		let helpfulCommands = ['commands', 'help', 'ping', 'purge']
 		let userControl = ['ban', 'kick', 'userinfo']
 		let playbackControl = ['nowplaying','play','queue','skip','stop']
 
-		let helpful = '*Help Commands* ```json\n'
-		let user = '*User Commands* ```json\n'
-		let playback = '*Music Commands* ```json\n'
-		let additional = '*Additional Commands* ```json\n'
+		let help = []
+		let users = []
+		let playback = []
+		let additional = []
 
 		for (const file of commandFiles) {
 			const command = require(`./${file}`);
 				if(helpfulCommands.indexOf(command.name) !== -1)
-					helpful += `"${process.env.BOT_PREFIX}${command.name}" ${command.description} \n`;
+					help.push(`\`${process.env.BOT_PREFIX}${command.name}\` ${command.description}`)
 
 				if(userControl.indexOf(command.name) !== -1)
-					user += `"${process.env.BOT_PREFIX}${command.name}" ${command.description} \n`;
+					users.push(`\`${process.env.BOT_PREFIX}${command.name}\` ${command.description}`)
 
 				if(playbackControl.indexOf(command.name) !== -1)
-					playback += `"${process.env.BOT_PREFIX}${command.name}" ${command.description} \n`;
+					playback.push(`\`${process.env.BOT_PREFIX}${command.name}\` ${command.description}`)
 
 				if(
 					helpfulCommands.indexOf(command.name) == -1 &&
 					userControl.indexOf(command.name) == -1 &&
 					playbackControl.indexOf(command.name) == -1
 				)
-				additional += `"${process.env.BOT_PREFIX.replace(/[0-9]/g, "X")}${command.name}" ${command.description} \n`;
+				additional.push(`\`${process.env.BOT_PREFIX.replace(/[0-9]/g, "X")}${command.name}\` ${command.description}`)
 		}
 
-		helpful += '```\n'
-		user += '```\n'
-		playback += '```\n'
-		additional += '```\n'
 
-		output += helpful + user + playback + additional
-		console.log(`DEBUG ${output}`)
+
+
+		const output = new Discord.MessageEmbed()
+			.setColor(process.env.EMBED_COLORS)
+			.setTitle('Commands')
+			.setDescription('*The following commands are available*')
+			.addFields(
+				{ name: '**Help Commands**', value: help.join(`\n`) },
+				{ name: '**User Commands**', value: users.join(`\n`) },
+				{ name: '**Music Commands**', value: playback.join(`\n`) },
+				{ name: '**Additional Commands**', value: additional.join(`\n`) }
+			)
+
 		message.channel.send(output);
 	},
 };

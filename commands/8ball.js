@@ -1,4 +1,5 @@
 const fs = require('fs')
+const Discord = require('discord.js');
 
 module.exports = {
 	name: '8ball',
@@ -27,8 +28,18 @@ module.exports = {
       "Very doubtful."
     ]
     let choice = Math.floor(Math.random() * options.length)
-		return message.reply(
-      `the 8ball has spoken:\n\`\`\`json\n\"${options[choice]}\"\`\`\``
-    )
+
+		const split = message.content.split(/ +/);
+		const args = split.slice(1);
+
+		const output = new Discord.MessageEmbed()
+			.setColor(process.env.EMBED_COLORS)
+			.setTitle(`Question: ${args.join(' ')}`)
+			.addFields(
+				{ name: 'Response', value: `\`\`\`ini\n \[${options[choice]}\]\`\`\`` },
+			)
+			.setImage("https://media.giphy.com/media/IciTD3MuU3oXgdtVB7/giphy.gif")
+
+		return message.reply(output)
 	},
 };
