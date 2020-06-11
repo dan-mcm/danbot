@@ -35,9 +35,6 @@ module.exports = {
 				additional.push(`\`${process.env.BOT_PREFIX.replace(/[0-9]/g, "X")}${command.name}\` ${command.description}`)
 		}
 
-
-
-
 		const output = new Discord.MessageEmbed()
 			.setColor(process.env.EMBED_COLORS)
 			.setTitle('Commands')
