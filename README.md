@@ -13,7 +13,6 @@ A special mention to the discordjs community accessible for answering queries ov
 
 The bot is accessible in the `Danbot Staging` discord channel accessible [here](https://discord.gg/xp7NbBT).
 
----
 # Commands & Additional Features
 
 ## Helpful Commands
@@ -51,6 +50,7 @@ The bot is accessible in the `Danbot Staging` discord channel accessible [here](
 | !8ball | Ask the 8ball your question e.g. !8ball will tomorrow be sunny? |
 | !gif | Shows a random gif from giphy (general audience rated) |
 | !cat | Return a random cat image |
+| !dadjoke | If you want to hear some terrible jokes |
 | !fortune | Open a fortune cookie |
 
 ---
