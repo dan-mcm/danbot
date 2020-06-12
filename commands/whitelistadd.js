@@ -5,7 +5,6 @@ const { getUserFromMention } = require('../util/getUser')
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 async function addWhitelistedUser(user, message){
-  console.log(`Validating User ${user}`)
 	const doc = new GoogleSpreadsheet(process.env.WHITELIST_SPREADSHEET_ID);
 
 	await doc.useServiceAccountAuth({
@@ -27,6 +26,8 @@ module.exports = {
 	execute(message, client) {
     const split = message.content.split(/ +/);
 		const args = split.slice(1);
+    if (!message.member.hasPermission("ADMINISTRATOR"))
+			return message.reply("you do not have admin level permissions.")
 		addWhitelistedUser(args, message)
 	}
 };
