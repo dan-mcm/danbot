@@ -1,7 +1,6 @@
-// at the top of your file
 const Discord = require('discord.js');
-
 const axios = require('axios')
+const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 // get Twitch Bearer token
 function getTwitchBearerToken() {
@@ -17,23 +16,45 @@ function getTwitchBearerToken() {
       .catch(err => console.log(`Error fetching token: ${err}`))
 }
 
+async function getWhitelistedUsers() {
+	const doc = new GoogleSpreadsheet(process.env.WHITELIST_SPREADSHEET_ID);
+
+	await doc.useServiceAccountAuth({
+	  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+	  private_key: process.env.GOOGLE_PRIVATE_KEY,
+	});
+
+	await doc.loadInfo();
+	const sheet = doc.sheetsByIndex[0]
+	const rows = await sheet.getRows()
+
+	let whitelistedUsers = []
+	rows.map(data =>
+		whitelistedUsers.push(data.usernames)
+	)
+
+	return whitelistedUsers
+}
+
 // calling Twitch api checking what streamers are active based on env variable list of whitelisted users
 function checkWhitelistedChannels(token,client){
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    'client-id': process.env.TWITCH_CLIENT_ID
-  };
+  return getWhitelistedUsers()
+  .then(users => {
 
-  // future logic could change the channels to match all those from users in the channel maybe?
-  // would be more efficient to automate this than keep a whielisted settings
-  // on other hand you want to control the spam in the live channels surely incase nsfw or others present
-  const params = {
-     user_login: process.env.TWITCH_CHANNELS.split(',')
-  };
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'client-id': process.env.TWITCH_CLIENT_ID
+    };
 
-  return axios.get('https://api.twitch.tv/helix/streams', {
-    headers,
-    params
+    // need to update this from process.env to results from whitelist...
+    const params = {
+       user_login: users
+    };
+
+    return axios.get('https://api.twitch.tv/helix/streams', {
+      headers,
+      params
+    })
   })
 }
 
@@ -80,7 +101,7 @@ function sendingChannelUpdates(data, client){
           // hacky way to limit our posting to streams that only started within the last x minutes (based on polling frequency)
           let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(streamer.started_at)) / 60000
 
-          console.log(`[DEBUG] ${streamer.user_name} started ${minutesAgoStarted} minutes ago \n[started @ ${streamer.started_at}] \n[currenttime @ ${currentDateTime}]`)
+          console.log(`[DEBUG] ${streamer.user_name} started ${minutesAgoStarted} minutes ago. [started @ ${streamer.started_at}][currenttime @ ${currentDateTime}]`)
 
           // using 2 minutes as our hardcoded threshold
           if(minutesAgoStarted < 3){

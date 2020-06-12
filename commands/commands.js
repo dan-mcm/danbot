@@ -8,7 +8,7 @@ module.exports = {
 		const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 		let helpfulCommands = ['commands', 'help', 'ping', 'purge']
-		let userControl = ['ban', 'kick', 'userinfo', 'whitelist']
+		let userControl = ['ban', 'kick', 'userinfo', 'whitelist', 'whitelistdelete', 'whitelistadd']
 		let playbackControl = ['nowplaying','play','queue','skip','stop']
 
 		let help = []

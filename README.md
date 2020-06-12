@@ -31,7 +31,9 @@ The bot is accessible in the `Danbot Staging` discord channel accessible [here](
 | !ban | Ban a player |
 | !kick | Kick a user |
 | !userinfo | Get information about a user |
-| !whitelist | Get the users currently whitelisted for shouting out when going live on Twitch. |
+| !whitelist | List whitelisted users for shouting out when live on Twitch |
+| !whitelistadd  | Delete a Twitch username from the going-live whitelist |
+| !whitelistdelete | Delete a Twitch username from the going-live whitelist |
 
 ## Playback Control
 
@@ -57,11 +59,22 @@ The bot is accessible in the `Danbot Staging` discord channel accessible [here](
 # Twitch Integration
 
 ## 🔴 Now Live
-The bot can provide going live messages for whitelisted users based on the following env Variables
-* `NOWLIVE_ANNOUNCEMENTS_ID` controls the channel where live twitch channels are now active
-* `TWITCH_CHANNELS` controls which twitch channels are monitored for live status. This is a defined as a comma delimited string
+The bot can provide going live messages for whitelisted users.
 
-Note: the bot is currently configured to poll Twitch API on a 60second interval (defined by the `TWITCH_POLLING_FREQUENCY` environmental variable so there may be a delay between the time a user goes live and a message is shown. If interested a potential alternative to this implementation is using [Twitchs pub/sub system](https://dev.twitch.tv/docs/pubsub).
+* `NOWLIVE_ANNOUNCEMENTS_ID` controls the channel where live twitch channels are now active
+
+In order to maintain a dynamic updatable whitelist integration with Google Sheets is required.  
+This can be configured through the following env variables.
+
+* `WHITELIST_SPREADSHEET_ID`
+* `GOOGLE_SERVICE_ACCOUNT_EMAIL`
+* `GOOGLE_PRIVATE_KEY`
+* `GOOGLE_SPEADSHEET_URL`
+
+To get setup with a google service account follow the [official guidelines](https://developers.google.com/identity/protocols/oauth2/service-account). Be sure to share your Google Spreadsheet to your GOGOEL_SERVICE_ACCOUNT_EMAIL to avoid hitting 401/403 errors.
+
+
+Note: the bot is currently configured to poll Twitch API on a 3 minute interval (defined by the `TWITCH_POLLING_FREQUENCY` environmental variable so there may be a delay between the time a user goes live and a message is shown. If interested a potential alternative to this implementation is using [Twitchs pub/sub system](https://dev.twitch.tv/docs/pubsub).
 
 ---
 # Local Setup
@@ -95,8 +108,7 @@ GIPHY_API_KEY=your-giphy-api-key
 # Twitch Config
 TWITCH_CLIENT_ID=your-twitch-client-id
 TWITCH_CLIENT_SECRET=your-twitch-client-secret
-TWITCH_CHANNELS=comma-deliminated-list-of-channels-to-track-going-live
-TWITCH_POLLING_FREQUENCY="60000"
+TWITCH_POLLING_FREQUENCY=twitch-polling-frequency
 
 # YouTube Config
 YOUTUBE_API_KEY=youtube-api-key
@@ -107,6 +119,13 @@ NOWLIVE_ANNOUNCEMENTS_ID=channel-id
 WELCOME_CHANNEL=welcome
 PLAYLIST_CHANNEL=channel-id
 PLAYLIST_VOICE_CHANNEL_ID=channel-id
+
+# Whitelisted Channels
+WHITELIST_SPREADSHEET_ID=id-from-spreadsheet-url
+GOOGLE_SERVICE_ACCOUNT_EMAIL=serviceaccount-email
+GOOGLE_PRIVATE_KEY=google-serviceaccount-privatekey
+GOOGLE_SPEADSHEET_URL=direct-spreadsheet-url
+
 ```
 
 ### Discord Bot Variables

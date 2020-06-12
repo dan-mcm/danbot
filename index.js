@@ -3,12 +3,9 @@ const Discord = require("discord.js");
 const Client = require('./client/Client');
 const Canvas = require('canvas');
 
-// loading giphy api key from dotenv config
-const result = require('dotenv').config()
-
-if (result.error) {
+const config = require('dotenv').config()
+if (config.error) {
   console.log("No .env file found, using global environmental variables intead")
-  // throw result.error
 }
 
 // extension of the discord client with the queue system for music purposes
@@ -23,10 +20,8 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-// debug
-console.log(client.commands);
 client.once('ready', () => {
-	console.log('Ready!');
+	console.log('Discord Client Ready!');
 });
 
 client.once('reconnecting', () => {
@@ -39,7 +34,7 @@ client.once('disconnect', () => {
 
 // This event will run if the bot starts, and logs in, successfully.
 client.on("ready", () => {
-  console.log(`Bot has started, with ${Object.keys(client.users).length} users, in ${Object.keys(client.channels).length} channels of ${Object.keys(client.guilds).length} guilds.`);
+  console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.guilds.cache.size} guild.`);
   // client.user.setActivity(`Serving ${Object.keys(client.guilds).length} servers`);
 });
 
@@ -161,5 +156,5 @@ app.get('/health', function (req, res) {
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-    console.log(`Our app is running on port ${ PORT }`);
+    console.log(`Bot is running on port ${ PORT }`);
 });
