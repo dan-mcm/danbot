@@ -4,6 +4,9 @@ module.exports = {
   name: "queue",
   description: "Shows the current song queue",
   async execute(message) {
+    // only allowing users to use music commands in dedicated channel
+    if(`${message.channel}` != `<#${process.env.PLAYLIST_TEXT_CHANNEL_ID}>`)
+      return message.channel.send(`You need to be in the ${process.env.PLAYLIST_CHANNEL} text channel to make music requests.`)
     try {
       const args = message.content.split(" ");
       const queue = message.client.queue;

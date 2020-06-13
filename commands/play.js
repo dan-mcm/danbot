@@ -72,9 +72,13 @@ module.exports = {
       const serverQueue = message.client.queue.get(message.guild.id);
       const voiceChannel = message.member.voice.channel;
 
+      // only allowing users to use music commands in dedicated channel
+      if(`${message.channel}` != `<#${process.env.PLAYLIST_TEXT_CHANNEL_ID}>`)
+        return message.channel.send(`You need to be in the ${process.env.PLAYLIST_TEXT_CHANNEL} text channel to make music requests.`)
+
       if (!voiceChannel)
         return message.channel.send(
-          `You need to be in the ${process.env.PLAYLIST_CHANNEL} voice channel to play music!`
+          `You need to join the ${process.env.PLAYLIST_CHANNEL} voice channel to play music.`
         );
 
       if((message.member.voice.channel).toString() !== `<#${process.env.PLAYLIST_VOICE_CHANNEL_ID}>`)

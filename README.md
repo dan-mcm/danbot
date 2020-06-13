@@ -117,7 +117,9 @@ YOUTUBE_API_KEY=youtube-api-key
 NOWLIVE_ANNOUNCEMENTS=now-live
 NOWLIVE_ANNOUNCEMENTS_ID=channel-id
 WELCOME_CHANNEL=welcome
-PLAYLIST_CHANNEL=channel-id
+PLAYLIST_TEXT_CHANNEL=channel-id-name
+PLAYLIST_TEXT_CHANNEL_ID=channel-id
+PLAYLIST_CHANNEL=channel-id-name
 PLAYLIST_VOICE_CHANNEL_ID=channel-id
 
 # Whitelisted Channels
@@ -125,7 +127,6 @@ WHITELIST_SPREADSHEET_ID=id-from-spreadsheet-url
 GOOGLE_SERVICE_ACCOUNT_EMAIL=serviceaccount-email
 GOOGLE_PRIVATE_KEY=google-serviceaccount-privatekey
 GOOGLE_SPEADSHEET_URL=direct-spreadsheet-url
-
 ```
 
 ### Discord Bot Variables
@@ -136,6 +137,7 @@ The `EMBED_COLORS` variable is a HEX color used for determining the color of mes
 * For `WELCOME_CHANNEL` you need to specify a channel name within your discord server to use for new user addition welcome.
 * For `NOWLIVE_ANNOUNCEMENTS_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific channels channel-id
 * For `PLAYLIST_CHANNEL` and `PLAYLIST_VOICE_CHANNEL_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific voice channels channel-id
+* For `PLAYLIST_TEXT_CHANNEL` and `PLAYLIST_TEXT_CHANNEL_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific voice channels channel-id
 
 ### Getting API Keys
 
