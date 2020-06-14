@@ -42,6 +42,8 @@ client.on("ready", () => {
 client.on("ready", () => {
   const pollingCurrentlyLive = require('./twitch')
   setInterval(() => pollingCurrentlyLive(client), process.env.TWITCH_POLLING_FREQUENCY)
+  const pollingLatestVideos = require('./youtube')
+  setInterval(() => pollingLatestVideos(client), process.env.YOUTUBE_POLLING_FREQUENCY)
 })
 
 // client.on("guildCreate", guild => {

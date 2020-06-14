@@ -73,8 +73,14 @@ This can be configured through the following env variables.
 
 To get setup with a google service account follow the [official guidelines](https://developers.google.com/identity/protocols/oauth2/service-account). Be sure to share your Google Spreadsheet to your GOGOEL_SERVICE_ACCOUNT_EMAIL to avoid hitting 401/403 errors.
 
-
 Note: the bot is currently configured to poll Twitch API on a 3 minute interval (defined by the `TWITCH_POLLING_FREQUENCY` environmental variable so there may be a delay between the time a user goes live and a message is shown. If interested a potential alternative to this implementation is using [Twitchs pub/sub system](https://dev.twitch.tv/docs/pubsub).
+
+## 🎬 YouTube Uploads
+The bot can provide YouTube channel video upload notifications for a designated YouTube account.
+
+* `YOUTUBE_CHANNEL_ID` points to the YouTube channel you wish to poll uploaded videos from.
+* `YOUTUBE_POLLING_FREQUENCY` designates the frequency of the YouTube polls set to 60minutes by default
+* `YOUTUBE_ANNOUNCEMENTS_ID` designates the text channel to post updates to
 
 ---
 # Local Setup
@@ -127,6 +133,12 @@ WHITELIST_SPREADSHEET_ID=id-from-spreadsheet-url
 GOOGLE_SERVICE_ACCOUNT_EMAIL=serviceaccount-email
 GOOGLE_PRIVATE_KEY=google-serviceaccount-privatekey
 GOOGLE_SPEADSHEET_URL=direct-spreadsheet-url
+
+# YouTube Details
+YOUTUBE_CHANNEL_ID=youtube-channel-id
+YOUTUBE_POLLING_FREQUENCY=youtube-polling-frequency
+YOUTUBE_ANNOUNCEMENTS_ID=channel-id
+
 ```
 
 ### Discord Bot Variables
@@ -137,7 +149,8 @@ The `EMBED_COLORS` variable is a HEX color used for determining the color of mes
 * For `WELCOME_CHANNEL` you need to specify a channel name within your discord server to use for new user addition welcome.
 * For `NOWLIVE_ANNOUNCEMENTS_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific channels channel-id
 * For `PLAYLIST_CHANNEL` and `PLAYLIST_VOICE_CHANNEL_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific voice channels channel-id
-* For `PLAYLIST_TEXT_CHANNEL` and `PLAYLIST_TEXT_CHANNEL_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific voice channels channel-id
+* For `PLAYLIST_TEXT_CHANNEL` and `PLAYLIST_TEXT_CHANNEL_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific test channels channel-id
+* For `YOUTUBE_ANNOUNCEMENTS_ID` see the official Discord [docs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) on how to get a specific test channels channel-id
 
 ### Getting API Keys
 

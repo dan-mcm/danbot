@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const Discord = require('discord.js')
 const axios = require('axios')
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
@@ -105,7 +105,7 @@ function sendingChannelUpdates(data, client){
 
           // using 2 minutes as our hardcoded threshold
           if(minutesAgoStarted < 3){
-            return channel.send('@everyone' + `, **${streamer.user_name}** - https://www.twitch.com/${streamer.user_name} - is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
+            return channel.send('🔴 @everyone' + `, **${streamer.user_name}** - https://www.twitch.com/${streamer.user_name} - is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
           }
         }
       ).catch(
