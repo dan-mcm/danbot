@@ -130,7 +130,7 @@ function formatLiveCardEmbed(streamer, game_name, streamer_avatar){
       { name: 'Currently Playing', value: game_name, inline: true },
       { name: 'Viewers', value: streamer.viewer_count, inline: true }
     )
-    .setImage(streamer.thumbnail_url.replace("{width}", "700").replace("{height}", "400"))
+    .setImage(streamer.thumbnail_url.replace("{width}", "480").replace("{height}", "272"))
     .setTimestamp()
 }
 
