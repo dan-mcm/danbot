@@ -35,8 +35,8 @@ function pollingLatestVideos(client){
           let minutesAgoStarted = Math.floor(new Date(currentDateTime) - new Date(upload.snippet.publishTime)) / 60000
           let threshold = 50000000 // placeholder
 
-          // if video was uploaded in the last hour...
-          if(minutesAgoStarted < 60){
+          // if video was uploaded in the last 24 hours...
+          if(minutesAgoStarted < 1440){
             channel.send(
               `🔴 new YouTube video uploaded - https://www.youtube.com/watch?v=${upload.id.videoId}.`,
               formatYouTubeCardEmbed(
