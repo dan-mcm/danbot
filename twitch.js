@@ -120,7 +120,7 @@ function sendingChannelUpdates(data, client){
 function formatLiveCardEmbed(streamer, game_name, streamer_avatar){
   return new Discord.MessageEmbed()
     .setColor(process.env.EMBED_COLORS)
-    .setTitle(`🔴 **${streamer.user_name}** is Now Live!`)
+    .setTitle(`🟣 **${streamer.user_name}** is Now Live!`)
     .setURL(`https://www.twitch.com/${streamer.user_name}`)
     // .setAuthor('Some name', 'https://i.imgur.com/wSTFkRM.png', 'https://discord.js.org')
     .setDescription(streamer.title)

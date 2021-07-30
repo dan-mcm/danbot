@@ -38,7 +38,7 @@ function pollingLatestVideos(client){
           // if video was uploaded in the last hour...
           if(minutesAgoStarted < 60){
             channel.send(
-              `🎬 @everyone new YouTube video uploaded - https://www.youtube.com/watch?v=${upload.id.videoId}.`,
+              `🔴 new YouTube video uploaded - https://www.youtube.com/watch?v=${upload.id.videoId}.`,
               formatYouTubeCardEmbed(
                 upload.snippet.title,
                 upload.snippet.description,
