@@ -74,6 +74,8 @@ function sendingChannelUpdates(data, client){
 
   // hack with hardcoded channel id - need an automated way to get it...
   const channel = client.channels.cache.get(process.env.NOWLIVE_ANNOUNCEMENTS_ID);
+  const selfchannel = client.channels.cache.get(process.env.SELF_NOWLIVE_ANNOUNCEMENTS_ID);
+
   const tw = client.emojis.cache.find(emoji => emoji.name === "tw");
 
   if (!channel) return;
@@ -104,8 +106,13 @@ function sendingChannelUpdates(data, client){
 
           console.log(`[DEBUG] ${streamer.user_name} started ${minutesAgoStarted} minutes ago. [started @ ${streamer.started_at}][currenttime @ ${currentDateTime}]`)
 
-          // using 2 minutes as our hardcoded threshold
-          if(minutesAgoStarted < 3){
+          // case for the self promotion channel being different to the main promotions channel
+          if(streamer.user_name.toLowerCase() === process.env.TWITCH_SELF_IDENTIFIER && minutesAgoStarted < 3){
+            return selfchannel.send(`${tw} **${streamer.user_name}** - https://www.twitch.com/${streamer.user_name} - is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
+          }
+
+          // case for promoting other twich accounts in a separate channel -> using 2 minutes as our hardcoded threshold
+          if(streamer.user_name.toLowerCase() != process.env.TWITCH_SELF_IDENTIFIER && minutesAgoStarted < 3){
             return channel.send(`${tw} **${streamer.user_name}** - https://www.twitch.com/${streamer.user_name} - is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
           }
         }
