@@ -74,6 +74,7 @@ function sendingChannelUpdates(data, client){
 
   // hack with hardcoded channel id - need an automated way to get it...
   const channel = client.channels.cache.get(process.env.NOWLIVE_ANNOUNCEMENTS_ID);
+  const tw = client.emojis.cache.find(emoji => emoji.name === "tw");
 
   if (!channel) return;
 
@@ -105,7 +106,7 @@ function sendingChannelUpdates(data, client){
 
           // using 2 minutes as our hardcoded threshold
           if(minutesAgoStarted < 3){
-            return channel.send(`🔴 **${streamer.user_name}** - https://www.twitch.com/${streamer.user_name} - is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
+            return channel.send(`${tw} **${streamer.user_name}** - https://www.twitch.com/${streamer.user_name} - is now live!`, formatLiveCardEmbed(streamer, res[0], avatarImage))
           }
         }
       ).catch(

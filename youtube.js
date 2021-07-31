@@ -18,6 +18,7 @@ function pollingLatestVideos(client){
 
   // hack with hardcoded channel id - need an automated way to get it...
   const channel = client.channels.cache.get(process.env.YOUTUBE_ANNOUNCEMENTS_ID);
+  const yt = client.emojis.cache.find(emoji => emoji.name === "yt");
 
   const options = {
     channelId: process.env.YOUTUBE_CHANNEL_ID,
@@ -38,7 +39,7 @@ function pollingLatestVideos(client){
           // if video was uploaded in the last 24 hours...
           if(minutesAgoStarted < 1440){
             channel.send(
-              `🔴 new YouTube video uploaded - https://www.youtube.com/watch?v=${upload.id.videoId}.`,
+              `${yt} New DannyDanku YouTube video uploaded! \n https://www.youtube.com/watch?v=${upload.id.videoId}.`,
               formatYouTubeCardEmbed(
                 upload.snippet.title,
                 upload.snippet.description,
