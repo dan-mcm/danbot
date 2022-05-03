@@ -198,4 +198,5 @@ Want to temporarily turn off/on the bot?
 heroku ps:scale web=0 -a danbot2020
 # scale up
 heroku ps:scale web=1 -a danbot2020
+
 ```
