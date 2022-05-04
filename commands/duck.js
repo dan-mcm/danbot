@@ -16,6 +16,7 @@ module.exports = {
     )
     .then(data =>
       {
+      console.log(`data debug ${data}`)
       return message.channel.send({files: [data.url]})
       }
     )
