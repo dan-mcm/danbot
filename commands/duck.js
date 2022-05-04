@@ -16,7 +16,7 @@ module.exports = {
     )
     .then(data =>
       {
-      return message.channel.send({files: [data.data[0].url]})
+      return message.channel.send({files: [data.url]})
       }
     )
     .catch(err =>
