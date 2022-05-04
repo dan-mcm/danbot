@@ -16,8 +16,8 @@ module.exports = {
     )
     .then(data =>
       {
-      console.log(`data debug ${JSON.stringify(data)}`)
-      return message.channel.send({files: [data.url]})
+      console.log(`data debug ${JSON.stringify(data.data)}`)
+      return message.channel.send({files: [data.data.url]})
       }
     )
     .catch(err =>
