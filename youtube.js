@@ -27,7 +27,6 @@ function pollingLatestVideos(client){
     maxResults: '10',
     order: 'date'
   }
-
   searchYouTube(process.env.YOUTUBE_API_KEY, options)
   .then(res =>  {
 
