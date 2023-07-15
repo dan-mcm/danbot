@@ -17,6 +17,8 @@ function getTwitchBearerToken() {
 }
 
 async function getWhitelistedUsers() {
+  let whitelistedUsers = []
+  
   try {
     const doc = new GoogleSpreadsheet(process.env.WHITELIST_SPREADSHEET_ID);
 
@@ -29,7 +31,6 @@ async function getWhitelistedUsers() {
     const sheet = doc.sheetsByIndex[0]
     const rows = await sheet.getRows()
 
-    let whitelistedUsers = []
     rows.map(data =>
       whitelistedUsers.push(data.usernames)
     )
