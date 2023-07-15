@@ -17,21 +17,26 @@ function getTwitchBearerToken() {
 }
 
 async function getWhitelistedUsers() {
-	const doc = new GoogleSpreadsheet(process.env.WHITELIST_SPREADSHEET_ID);
+  let whitelistedUsers = []
+  
+  try {
+    const doc = new GoogleSpreadsheet(process.env.WHITELIST_SPREADSHEET_ID);
 
-	await doc.useServiceAccountAuth({
-	  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-	  private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-	});
+    await doc.useServiceAccountAuth({
+      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    });
 
-	await doc.loadInfo();
-	const sheet = doc.sheetsByIndex[0]
-	const rows = await sheet.getRows()
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[0]
+    const rows = await sheet.getRows()
 
-	let whitelistedUsers = []
-	rows.map(data =>
-		whitelistedUsers.push(data.usernames)
-	)
+    rows.map(data =>
+      whitelistedUsers.push(data.usernames)
+    )
+  } catch (err) {
+    console.log(err)
+  }
 
 	return whitelistedUsers
 }
@@ -59,6 +64,7 @@ function checkWhitelistedChannels(token,client){
 }
 
 function checkingNowLive(data,client){
+  console.log('Checking Now Live Videos...')
   if(data.length==0){
     return null
   } else {

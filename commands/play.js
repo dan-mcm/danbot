@@ -1,42 +1,51 @@
 const ytdl = require("ytdl-core");
 const searchYouTube = require("youtube-api-v3-search");
 
-async function coreLogic(youtubeUrl, queue, serverQueue, message, voiceChannel){
-  const songInfo = await ytdl.getInfo(youtubeUrl);
+async function coreLogic(youtubeUrl, queue, serverQueue, message, voiceChannel) {
+  try {
+    const songInfo = await ytdl.getInfo(youtubeUrl);
 
-  const song = {
-    title: songInfo.title,
-    url: songInfo.video_url
-  };
+    if (!songInfo || !songInfo.videoDetails) {
+      throw new Error("Unable to retrieve video metadata");
+    }
 
-  if (!serverQueue) {
-    const queueContruct = {
-      textChannel: message.channel,
-      voiceChannel: voiceChannel,
-      connection: null,
-      songs: [],
-      volume: 5,
-      playing: true
+    const { title, video_url } = songInfo.videoDetails;
+
+    const song = {
+      title: title,
+      url: video_url
     };
 
-    queue.set(message.guild.id, queueContruct);
+    if (!serverQueue) {
+      const queueContruct = {
+        textChannel: message.channel,
+        voiceChannel: voiceChannel,
+        connection: null,
+        songs: [],
+        volume: 5,
+        playing: true
+      };
 
-    queueContruct.songs.push(song);
+      queue.set(message.guild.id, queueContruct);
 
-    try {
-      var connection = await voiceChannel.join();
-      queueContruct.connection = connection;
-      play(message, queueContruct.songs[0]);
-    } catch (err) {
-      console.log(err);
-      queue.delete(message.guild.id);
-      return message.channel.send(err);
+      queueContruct.songs.push(song);
+
+      try {
+        var connection = await voiceChannel.join();
+        queueContruct.connection = connection;
+        play(message, queueContruct.songs[0]);
+      } catch (err) {
+        console.error(err);
+        queue.delete(message.guild.id);
+        return message.channel.send(`Error: ${err.message}`);
+      }
+    } else {
+      serverQueue.songs.push(song);
+      return message.channel.send(`${song.title} has been added to the queue!`);
     }
-  } else {
-    serverQueue.songs.push(song);
-    return message.channel.send(
-      `${song.title} has been added to the queue!`
-    );
+  } catch (err) {
+    console.error(`coreLogic Error: ${err}`);
+    return message.channel.send(`${err.message}`);
   }
 }
 
@@ -50,16 +59,19 @@ function play(message, song) {
     queue.delete(guild.id);
     return;
   }
-
-  const dispatcher = serverQueue.connection
-    .play(ytdl(song.url))
-    .on("finish", () => {
-      serverQueue.songs.shift();
-      play(message, serverQueue.songs[0]);
-    })
-    .on("error", error => console.error(error));
-  dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-  serverQueue.textChannel.send(`Start playing: **${song.title}**`);
+  try {
+    const dispatcher = serverQueue.connection
+      .play(ytdl(song.url))
+      .on("finish", () => {
+        serverQueue.songs.shift();
+        play(message, serverQueue.songs[0]);
+      })
+      .on("error", error => console.error(error));
+    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+    serverQueue.textChannel.send(`Start playing: **${song.title}**`);
+  } catch (err){
+    console.log(`Play Dispatch Error: ${err}`)
+  }
 }
 
 module.exports = {

@@ -88,11 +88,17 @@ The bot can provide YouTube channel video upload notifications for a designated 
 
 ## Install & Run
 
-Using yarn during development, should also run fine on npm
+Using npm during development, should also run fine on npm
 
 ```
-yarn install
-yarn start
+npm install
+npm start
+```
+
+You can also leverage the included docker-compose file to run a local docker image on port 8000
+
+```
+docker-compose up -d
 ```
 
 ## Environmental Variables
@@ -171,7 +177,30 @@ Without it you are likely to encounter the following Error when running any of t
 Error: FFmpeg/avconv not found!
 ```
 
-# Production Deployment
+# Production Deployment [Azure]
+
+## Build Image & Deploy to Azure Container Registry
+
+```
+# build image
+docker build -t danbot.azurecr.io/danbot:1.0.31 .
+
+# login to docker - credentials are under the container registry -> access keys -> (admin user enabled)
+docker login danbot.azurecr.io
+
+# push image to docker registry
+docker push danbot.azurecr.io/danbot:1.0.31
+```
+
+## Create Azure Container Instance
+
+Create a Container Instance via Azure dashboard and link to the relevant ACR image for deployment
+
+## Monitoring
+
+Logs accessible via Azure Dashboard (or via az cli tooling)
+
+# Production Deployment [Heroku]
 
 The Bot is currently configured for deployment on Heroku (as an initial free hosting solution).
 There is a nice [medium article](https://medium.com/@mason.spr/hosting-a-discord-js-bot-for-free-using-heroku-564c3da2d23f) on how to deploy your own.
