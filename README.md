@@ -95,6 +95,12 @@ npm install
 npm start
 ```
 
+You can also leverage the included docker-compose file to run a local docker image on port 8000
+
+```
+docker-compose up -d
+```
+
 ## Environmental Variables
 
 The following is a list of environmental variables that need to be defined.
