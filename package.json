@@ -1,6 +1,6 @@
 {
   "name": "danbot",
-  "version": "1.0.31",
+  "version": "1.0.35",
   "description": "a basic discord bot",
   "engines": {
     "node": "14.17.6"
